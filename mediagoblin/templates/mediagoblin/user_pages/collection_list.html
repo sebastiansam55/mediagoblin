@@ -48,7 +48,7 @@
     {% for coll in collections %}
       {%- set coll_url = coll.url_for_self(request.urlgen) %}
       <li>
-        <a href="{{ coll_url }}">{{ coll.title }}</a>
+        <a href="{{ coll_url }}">{{ coll.title }}</a> {{ coll.coll_type }}
       </li>
     {% endfor %}
   </ul>

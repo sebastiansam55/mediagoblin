@@ -118,14 +118,18 @@ def add_collection(request, media=None):
         collection = request.db.Collection()
 
         collection.title = unicode(submit_form.title.data)
+        collection.coll_type = unicode(submit_form.coll_type.data)
         collection.description = unicode(submit_form.description.data)
-        collection.creator = request.user.id
+        collection.creator = request.user.id              
         collection.generate_slug()
 
         # Make sure this user isn't duplicating an existing collection
         existing_collection = request.db.Collection.query.filter_by(
                 creator=request.user.id,
-                title=collection.title).first()
+                title=collection.title,
+                coll_type=collection.coll_type).first()
+                
+        _log.info(existing_collection)
 
         if existing_collection:
             add_message(request, messages.ERROR,

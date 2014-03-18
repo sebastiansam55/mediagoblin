@@ -67,6 +67,7 @@
   {% set feed_url = request.urlgen('mediagoblin.user_pages.collection_atom_feed',
                                    user=user.username,
                                    collection=collection.slug ) %}
+                                   
   {% include "mediagoblin/utils/feed_link.html" %}
 
 {% endblock %}

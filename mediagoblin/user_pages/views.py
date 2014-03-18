@@ -276,11 +276,22 @@ def media_collect(request, media):
                              _('"%s" already in collection "%s"')
                              % (media.title, collection.title))
     else: # Add item to collection
-        add_media_to_collection(collection, media, form.note.data)
+        if collection.coll_type=="general":
+            add_media_to_collection(collection, media, form.note.data)
+    
+            messages.add_message(request, messages.SUCCESS,
+                                _('"%s" added to collection "%s"')
+                                % (media.title, collection.title))
+        elif collection.coll_type=="podcast" and media.media_type=="audio":
+            add_media_to_collection(collection, media, form.note.data)
+    
+            messages.add_message(request, messages.SUCCESS,
+                                _('"%s" added to collection "%s"')
+                                % (media.title, collection.title))
+        else:
+            messages.add_message(request, messages.ERROR,
+                _('Wrong type for the collection!'))
 
-        messages.add_message(request, messages.SUCCESS,
-                             _('"%s" added to collection "%s"')
-                             % (media.title, collection.title))
 
     return redirect_obj(request, media)
 

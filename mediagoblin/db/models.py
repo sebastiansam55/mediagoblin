@@ -542,13 +542,14 @@ class Collection(Base, CollectionMixin):
 
     id = Column(Integer, primary_key=True)
     title = Column(Unicode, nullable=False)
+    coll_type = Column(Unicode)
     slug = Column(Unicode)
     created = Column(DateTime, nullable=False, default=datetime.datetime.now,
                      index=True)
-    description = Column(UnicodeText)
+    description = Column(UnicodeText)    
     creator = Column(Integer, ForeignKey(User.id), nullable=False)
     # TODO: No of items in Collection. Badly named, can we migrate to num_items?
-    items = Column(Integer, default=0)
+    items = Column(Integer, default=0)    
 
     # Cascade: Collections are owned by their creator. So do the full thing.
     get_creator = relationship(User,
